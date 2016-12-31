@@ -1,4 +1,4 @@
-(function basicTests() {
+(function allTests() {
   var tap = require('tap');
   var n = require('../numberstowords');
 
