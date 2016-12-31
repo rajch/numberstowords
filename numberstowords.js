@@ -67,6 +67,37 @@ function numberstowords()
     return result.trim();
   }
 
+  function toIndianThousands(number)
+  {
+    var value = number;
+    var result = '';
+    
+    if(value > 9999999) {
+      var croreFactor = Math.trunc(value / 10000000);
+      
+      result += toIndianThousands(croreFactor) + ' crore ';
+      value = value % 10000000;
+    }
+
+    if(value > 99999) {
+      var lakhFactor = Math.trunc(value / 100000);
+
+      result += toIndianThousands(lakhFactor) + ' lakh ';
+      value = value % 100000;
+    }
+
+    if(value > 999) {
+      var thousandFactor = Math.trunc(value / 1000);
+
+      result += toIndianThousands(thousandFactor) + ' thousand ';
+      value = value % 1000;
+    }
+
+    result += toHundreds(value);
+
+    return result.trim();
+  }
+
   this.toWords = function(number) {
     var value = number;
     var result = '';
@@ -74,13 +105,7 @@ function numberstowords()
       result = 'zero '
     } else {
 
-      var thousandFactor = Math.trunc(value / 1000);
-      if(thousandFactor > 0) {
-        result += this.toWords(thousandFactor) + ' thousand ';
-        value = value % 1000;
-      }
-
-      result += toHundreds(value);
+      result = toIndianThousands(value);
     }
 
     return result.trim();
