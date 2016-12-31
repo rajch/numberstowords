@@ -1,3 +1,4 @@
+// This test should be considered obsolete. Leaving it in for now.
 (function allTests() {
   var tap = require('tap');
   var n = require('../numberstowords');
