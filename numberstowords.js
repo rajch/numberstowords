@@ -16,7 +16,7 @@
 
   function numberstowords()
   {
-    this.options = {
+    this.words = {
       unitWords : [
                     'zero',
                     'one',
@@ -52,9 +52,9 @@
                          "billion" : 'billion',
                          "trillion" : 'trillion'
                        },
-      useComma : false,
-      useAnd : false
     };
+
+    this.options = { useComma : false, useAnd : false, integerOnly : true };
 
     function combineOpts(opts1, opts2)
     {
@@ -74,29 +74,29 @@
       return result;
     }
 
-    function getSmallAmountWord(word, opts)
+    function getSmallAmountWord(word, words)
     {
-      return ' ' + opts.smallAmountWords[word] + ' ';
+      return ' ' + words.smallAmountWords[word] + ' ';
     }
 
-    function getBigAmountWord(word, opts)
+    function getBigAmountWord(word, words)
     {
-      return ' ' + opts.bigAmountWords[word] + ' ';
-    }
-    
-    function useComma(value, opts, needsComma) 
-    {
-      return opts.useComma && needsComma ? value.trim() +", " : value;
+      return ' ' + words.bigAmountWords[word] + ' ';
     }
 
-    function toHundreds(number, opts, needsAnd)
+    function useComma(value, opts, needsComma)
+    {
+      return opts.useComma && needsComma ? value.trim() + ", " : value;
+    }
+
+    function toHundreds(number, opts, words, needsAnd)
     {
       var value = number;
       var result = '';
 
       var hundredFactor = Math.trunc(value / 100);
       if(hundredFactor > 0) {
-        result += toHundreds(hundredFactor, opts) + getSmallAmountWord('hundred', opts);
+        result += toHundreds(hundredFactor, opts, words) + getSmallAmountWord('hundred', words);
         value = value % 100;
         needsAnd = true;
       }
@@ -107,7 +107,7 @@
           needsAnd = false;
         }
         var tenFactor = Math.trunc(value / 10);
-        result += opts.tenWords[tenFactor] + ' ';
+        result += words.tenWords[tenFactor] + ' ';
         value = value % 10;
       }
 
@@ -116,13 +116,13 @@
           result += 'and ';
           needsAnd = false;
         }
-        result += opts.unitWords[value] + ' ';
+        result += words.unitWords[value] + ' ';
       }
 
       return result.trim();
     }
 
-    function toIndianThousands(number, opts, needsComma)
+    function toIndianThousands(number, opts, words, needsComma)
     {
       var value = number;
       var result = '';
@@ -131,7 +131,7 @@
       if(value > 9999999) {
         var croreFactor = Math.trunc(value / 10000000);
 
-        result += toIndianThousands(croreFactor, opts) + getBigAmountWord('crore', opts);
+        result += toIndianThousands(croreFactor, opts, words) + getBigAmountWord('crore', words);
         value = value % 10000000;
         needsComma = true;
       }
@@ -140,7 +140,7 @@
         result = useComma(result, opts, needsComma);
         var lakhFactor = Math.trunc(value / 100000);
 
-        result += toIndianThousands(lakhFactor, opts) + getBigAmountWord('lakh', opts);
+        result += toIndianThousands(lakhFactor, opts, words) + getBigAmountWord('lakh', words);
         value = value % 100000;
         needsComma = true;
       }
@@ -149,32 +149,32 @@
         result = useComma(result, opts, needsComma);
         var thousandFactor = Math.trunc(value / 1000);
 
-        result += toIndianThousands(thousandFactor, opts) + getSmallAmountWord('thousand', opts);
+        result += toIndianThousands(thousandFactor, opts, words) + getSmallAmountWord('thousand', words);
         value = value % 1000;
         needsComma = true;
       }
 
       if(value !== 0) {
-        if(opts.useComma && needsComma && value >99 && value %100 !== 0) {
+        if(opts.useComma && needsComma && value > 99 && value % 100 !== 0) {
           result = result.trim() + ', ';
         }
-        result += toHundreds(value, opts, needsAnd);
+        result += toHundreds(value, opts, words, needsAnd);
       }
 
       return result.trim();
     }
 
-    function toInternationalThousands(number, opts, needsComma)
+    function toInternationalThousands(number, opts, words, needsComma)
     {
       var value = number;
       var result = '';
       var needsAnd = (value > 999);
 
       if(value > 999999999999) {
-        
+
         var trillionFactor = Math.trunc(value / 1000000000000);
 
-        result += toInternationalThousands(trillionFactor, opts) + getBigAmountWord('trillion', opts);
+        result += toInternationalThousands(trillionFactor, opts, words) + getBigAmountWord('trillion', words);
         value = value % 1000000000000;
         needsComma = true;
       }
@@ -183,7 +183,7 @@
         result = useComma(result, opts, needsComma);
         var billionFactor = Math.trunc(value / 1000000000);
 
-        result += toInternationalThousands(billionFactor, opts) + getBigAmountWord('billion', opts);
+        result += toInternationalThousands(billionFactor, opts, words) + getBigAmountWord('billion', words);
         value = value % 1000000000;
         needsComma = true;
       }
@@ -192,7 +192,7 @@
         result = useComma(result, opts, needsComma);
         var millionFactor = Math.trunc(value / 1000000);
 
-        result += toInternationalThousands(millionFactor, opts) + getBigAmountWord('million', opts);
+        result += toInternationalThousands(millionFactor, opts, words) + getBigAmountWord('million', words);
         value = value % 1000000;
         needsComma = true;
       }
@@ -201,16 +201,16 @@
         result = useComma(result, opts, needsComma);
         var thousandFactor = Math.trunc(value / 1000);
 
-        result += toInternationalThousands(thousandFactor, opts) + getSmallAmountWord('thousand', opts);
+        result += toInternationalThousands(thousandFactor, opts, words) + getSmallAmountWord('thousand', words);
         value = value % 1000;
         needsComma = true;
       }
 
       if(value !== 0) {
-        if(opts.useComma && needsComma && value >99 && value %100 !== 0) {
+        if(opts.useComma && needsComma && value > 99 && value % 100 !== 0) {
           result = result.trim() + ', ';
         }
-        result += toHundreds(value, opts, needsAnd);
+        result += toHundreds(value, opts, words, needsAnd);
       }
 
       return result.trim();
@@ -218,15 +218,17 @@
 
     this.toWords = function(number, opts) {
       opts = combineOpts(this.options, opts);
-      var value = number;
+
+      var value = opts.integerOnly ? Math.trunc(number) : number;
       var result = '';
+
       if(value === 0) {
         result = 'zero ';
       } else {
         if(opts.useIndianStyle) {
-          result = toIndianThousands(value, opts, false);
+          result = toIndianThousands(value, opts, this.words, false);
         } else {
-          result = toInternationalThousands(value, opts, false);
+          result = toInternationalThousands(value, opts, this.words, false);
         }
       }
 
@@ -234,13 +236,13 @@
     };
 
     this.toIndianWords = function toIndianWords(number, opts) {
-      opts = combineOpts(this.options, opts);
+      opts = opts || {};
       opts.useIndianStyle = true;
       return this.toWords(number, opts);
     };
 
     this.toInternationalWords = function toInternationalWords(number, opts) {
-      opts = combineOpts(this.options, opts);
+      opts = opts || {};
       opts.useIndianStyle = false;
       return this.toWords(number, opts);
     };
