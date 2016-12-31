@@ -41,7 +41,8 @@ var x = numberstowords.toIndianWords(260000000000, {useComma:true, useAnd:true})
 
 var x = numberstowords.toInternationalWords(260000000000, {useComma:true, useAnd:true});
 // x: nine hundred and ninety nine trillion, nine hundred and ninety nine billion, \
-//    nine hundred and ninety nine million, nine hundred and ninety nine thousand, nine hundred and ninety nine
+//    nine hundred and ninety nine million, nine hundred and ninety nine thousand, \
+//    nine hundred and ninety nine
 ```
 
 Note: As of version 0.1.0, numberstowords only works with integer numbers. Decimals are silently truncated.
