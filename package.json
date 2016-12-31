@@ -1,0 +1,22 @@
+{
+  "name": "@rajch/numberstowords",
+  "version": "0.1.0",
+  "description": "A javascript library to convert numbers to words. Supports both international and Indian convention.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap -b -Rspec test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajch/numberstowords.git"
+  },
+  "author": "Raj Chaudhuri",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rajch/numberstowords/issues"
+  },
+  "homepage": "https://github.com/rajch/numberstowords#readme",
+  "devDependencies": {
+    "tap": "^8.0.1"
+  }
+}
