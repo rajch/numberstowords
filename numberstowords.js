@@ -43,6 +43,30 @@ function numberstowords()
 
   var tenWords = [ null, null, 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety' ];
 
+  function toHundreds(number)
+  {
+    var value = number;
+    var result = '';
+
+    var hundredFactor = Math.trunc(value / 100);
+    if(hundredFactor > 0) {
+      result += toHundreds(hundredFactor) + ' hundred ';
+      value = value % 100;
+    }
+
+    if(value > 19) {
+      var tenFactor = Math.trunc(value / 10);
+      result += tenWords[tenFactor] + ' ';
+      value = value % 10;
+    }
+
+    if(value > 0) {
+      result += unitWords[value] + ' ';
+    }
+
+    return result.trim();
+  }
+
   this.toWords = function(number) {
     var value = number;
     var result = '';
@@ -50,21 +74,13 @@ function numberstowords()
       result = 'zero '
     } else {
 
-      var hundredFactor = Math.trunc(value / 100);
-      if(hundredFactor > 0) {
-          result += this.toWords(hundredFactor) + ' hundred ';
-          value = value % 100;
+      var thousandFactor = Math.trunc(value / 1000);
+      if(thousandFactor > 0) {
+        result += this.toWords(thousandFactor) + ' thousand ';
+        value = value % 1000;
       }
-      
-      if(value > 19 ) {
-        var tenFactor = Math.trunc(value/10);
-        result += tenWords[tenFactor] + ' ';
-        value = value % 10;
-      }
-      
-      if(value > 0) {
-        result += unitWords[value] + ' ';
-      }
+
+      result += toHundreds(value);
     }
 
     return result.trim();
