@@ -71,10 +71,10 @@ function numberstowords()
   {
     var value = number;
     var result = '';
-    
+
     if(value > 9999999) {
       var croreFactor = Math.trunc(value / 10000000);
-      
+
       result += toIndianThousands(croreFactor) + ' crore ';
       value = value % 10000000;
     }
@@ -98,11 +98,49 @@ function numberstowords()
     return result.trim();
   }
 
+  function toInternationalThousands(number)
+  {
+    var value = number;
+    var result = '';
+
+    if(value > 999999999999) {
+      var trillionFactor = Math.trunc(value / 1000000000000);
+
+      result += toInternationalThousands(trillionFactor) + ' trillion ';
+      value = value % 1000000000000;
+    }
+
+    if(value > 999999999) {
+      var billionFactor = Math.trunc(value / 1000000000);
+
+      result += toInternationalThousands(billionFactor) + ' billion ';
+      value = value % 1000000000;
+    }
+
+    if(value > 999999) {
+      var millionFactor = Math.trunc(value / 1000000);
+
+      result += toInternationalThousands(millionFactor) + ' million ';
+      value = value % 1000000;
+    }
+
+    if(value > 999) {
+      var thousandFactor = Math.trunc(value / 1000);
+
+      result += toInternationalThousands(thousandFactor) + ' thousand ';
+      value = value % 1000;
+    }
+
+    result += toHundreds(value);
+
+    return result.trim();
+  }
+
   this.toWords = function(number) {
     var value = number;
     var result = '';
     if(value === 0) {
-      result = 'zero '
+      result = 'zero ';
     } else {
 
       result = toIndianThousands(value);
@@ -110,6 +148,32 @@ function numberstowords()
 
     return result.trim();
   };
+
+  this.toIndianWords =
+      function toIndianWords(number) {
+        var value = number;
+        var result = '';
+        if(value === 0) {
+          result = 'zero ';
+        } else {
+
+          result = toIndianThousands(value);
+        }
+
+        return result.trim();
+      }
+
+      this.toInternationalWords = function toInternationalWords(number) {
+    var value = number;
+    var result = '';
+    if(value === 0) {
+      result = 'zero ';
+    } else {
+
+      result = toInternationalThousands(value);
+    }
+    return result.trim();
+  }
 }
 
 module.exports = new numberstowords();

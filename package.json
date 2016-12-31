@@ -4,7 +4,7 @@
   "description": "A javascript library to convert numbers to words. Supports both international and Indian convention.",
   "main": "index.js",
   "scripts": {
-    "test": "tap -b -Rspec test/basic.js",
+    "test": "tap -b -Rspec test/basic*.js",
     "alltests": "tap -b -Rspec test/allTests.js"
   },
   "repository": {
