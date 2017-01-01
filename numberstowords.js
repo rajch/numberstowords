@@ -50,13 +50,27 @@
                            "billion" : 'billion',
                            "trillion" : 'trillion'
                          },
-        andWord : 'and'
+        andWord : 'and',
+        pointWord : 'point',
+        onlyWord : 'only'
       };
     }
 
     function defaultOpts()
     {
-      return { useComma : false, useAnd : false, integerOnly : true };
+      return {
+        useComma : false,
+        useAnd : false,
+        useOnlyWord: false,
+        integerOnly : true,
+        showCurrency : false,
+        majorCurrencySymbol : 'rupees',
+        minorCurrencySymbol : 'paise',
+        majorCurrencyAtEnd : false,
+        minorCurrencyAtEnd : true,
+        suppressMajorIfZero : false,
+        suppressMinorIfZero : false
+      };
     }
 
     this.words = defaultWords();
@@ -88,6 +102,10 @@
     function getBigAmountWord(word, words)
     {
       return ' ' + words.bigAmountWords[word] + ' ';
+    }
+    
+    function getWord(word, words) {
+      return words[word + 'Word'];
     }
 
     function useComma(value, opts, needsComma)
@@ -240,20 +258,89 @@
       return result.trim();
     }
 
+    function processCurrency(number, opts, words)
+    {
+      var result = '';
+
+      var integerValue = Math.trunc(number);
+      if(!(integerValue === 0 && opts.suppressMajorIfZero)) {
+        var integerPart = convertToWords(integerValue, opts, words);
+
+        if(!opts.majorCurrencyAtEnd) {
+          result = opts.majorCurrencySymbol + ' ' + integerPart;
+        } else {
+          result = integerPart + ' ' + opts.majorCurrencySymbol;
+        }
+      }
+
+      if(!opts.integerOnly) {
+        var decimalValue = number - integerValue;
+        decimalValue = Math.round(decimalValue * 100);
+
+        if(!(decimalValue === 0 && opts.suppressMinorIfZero)) {
+          var decimalPart = convertToWords(decimalValue, opts, words);
+
+          if(result !== '') {
+            result += ' ' + words.andWord + ' ';
+          }
+
+          if(opts.minorCurrencyAtEnd === false) {
+            result += opts.minorCurrencySymbol + ' ' + decimalPart;
+          } else {
+            result += decimalPart + ' ' + opts.minorCurrencySymbol;
+          }
+        }
+      }
+
+      return result;
+    }
+
+    function processNumber(number, opts, words)
+    {
+      var result = '';
+
+      var integerPart = Math.trunc(number);
+      if(!(integerPart === 0 && opts.suppressMajorIfZero)) {
+        result = convertToWords(integerPart, opts, words);
+      }
+
+      if(!opts.integerOnly) {
+        var decimalPart = number - integerPart;
+        decimalPart = (Math.round(decimalPart * 100) / 100);
+
+        if(!(decimalPart === 0 && opts.suppressMinorIfZero)) {
+          if(result !== '') {
+            result += ' ';
+          }
+          
+          result += words.pointWord + ' ';
+
+          var decimalString = decimalPart.toFixed(2);
+
+          var decimalWords = decimalString.split('').splice(2).map(function(digitString) {
+            return words.unitWords[parseInt(digitString)]; // convertToWords(digitString, opts, words);
+          }).join(' ');
+
+          result += decimalWords.trim();
+        }
+      }
+      return result;
+    }
+
     this.toWords = function(number, opts) {
       opts = combineOpts(this.options, opts);
-      var result = 0;
-      if(opts.integerOnly) {
-        result = convertToWords(Math.trunc(number), opts, this.words);
+      var result = '';
+
+      if(opts.showCurrency) {
+        result = processCurrency(number, opts, this.words);
       } else {
-        var intergerPart = Math.trunc(number);
-        var decimalPart = number - intergerPart;
-
-        decimalPart = Math.round(decimalPart * 100);
-
-        result = convertToWords(intergerPart, opts, this.words) + ' ' + this.words.andWord + ' ' +
-                 convertToWords(decimalPart, opts, this.words);
+        result = processNumber(number, opts, this.words);
       }
+      
+      if(opts.useOnlyWord && result!=='') {
+        result += ' ' + getWord('only', this.words);
+      }
+
       return result;
     };
 
