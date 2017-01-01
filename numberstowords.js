@@ -61,15 +61,16 @@
       return {
         useComma : false,
         useAnd : false,
-        useOnlyWord: false,
+        useOnlyWord : false,
         integerOnly : true,
-        showCurrency : false,
+        useCurrency : false,
         majorCurrencySymbol : 'rupees',
         minorCurrencySymbol : 'paise',
         majorCurrencyAtEnd : false,
         minorCurrencyAtEnd : true,
         suppressMajorIfZero : false,
-        suppressMinorIfZero : false
+        suppressMinorIfZero : false,
+        useCase : 'lower'
       };
     }
 
@@ -103,8 +104,9 @@
     {
       return ' ' + words.bigAmountWords[word] + ' ';
     }
-    
-    function getWord(word, words) {
+
+    function getWord(word, words)
+    {
       return words[word + 'Word'];
     }
 
@@ -312,7 +314,7 @@
           if(result !== '') {
             result += ' ';
           }
-          
+
           result += words.pointWord + ' ';
 
           var decimalString = decimalPart.toFixed(2);
@@ -331,14 +333,24 @@
       opts = combineOpts(this.options, opts);
       var result = '';
 
-      if(opts.showCurrency) {
+      if(opts.useCurrency) {
         result = processCurrency(number, opts, this.words);
       } else {
         result = processNumber(number, opts, this.words);
       }
-      
-      if(opts.useOnlyWord && result!=='') {
+
+      if(opts.useOnlyWord && result !== '') {
         result += ' ' + getWord('only', this.words);
+      }
+
+      if(opts.useCase !== 'lower') {
+        if(opts.useCase.toLowerCase() === 'upper') {
+          result = result.toUpperCase();
+        } else if(opts.useCase.toLowerCase() === 'proper') {
+          result = result.split(' ').map(function properCase(element) {
+            return element.charAt(0).toUpperCase() + element.substring(1);
+          }).join(' ');
+        }
       }
 
       return result;

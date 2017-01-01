@@ -5,7 +5,7 @@
   function assertCurrency(number, word, majorOnly, majorAtEnd, minorAtEnd, suppressMajorIfZero, suppressMinorIfZero)
   {
     var opts = {
-      showCurrency : true,
+      useCurrency : true,
       majorCurrencySymbol : 'rupees',
       minorCurrencySymbol : 'paise',
       integerOnly : majorOnly,

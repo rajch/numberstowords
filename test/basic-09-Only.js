@@ -16,7 +16,7 @@
   assertWithOnly(1234, "one thousand two hundred and thirty four point zero zero only", {useAnd: true, integerOnly:false });
   assertWithOnly(1234.25, "one thousand two hundred and thirty four point two five only", {useAnd: true, integerOnly:false });
   
-  assertWithOnly(12.25, "rupees twelve and twenty five paise only", {useAnd: true, integerOnly:false, showCurrency:true });
+  assertWithOnly(12.25, "rupees twelve and twenty five paise only", {useAnd: true, integerOnly:false, useCurrency:true });
   
   assertWithOnly(0, "zero only");
   assertWithOnly(0, "zero point zero zero only", {integerOnly:false});
