@@ -43,6 +43,62 @@ var x = numberstowords.toInternationalWords(260000000000, {useComma:true, useAnd
 // x: nine hundred and ninety nine trillion, nine hundred and ninety nine billion, \
 //    nine hundred and ninety nine million, nine hundred and ninety nine thousand, \
 //    nine hundred and ninety nine
+
+// Decimals are now allowed
+var x = numberstowords.toIndianWords(26.67, {integerOnly:false});
+// x: twenty six point six seven
+
+// Rounded up to two decimal places only. 
+var x = numberstowords.toIndianWords(26.6764, {integerOnly:false});
+// x: twenty six point six eight
+
+// You can use the 'currency format'
+var x = numberstowords.toIndianWords(26.67, {
+                                integerOnly:false, 
+                                useCurrency: true,
+                                majorCurrencySymbol: 'ringit',
+                                minorCurrencySymbol: 'sen' });
+// x: ringit twenty six and sixty seven sen
+
+// With some control options
+var x = numberstowords.toIndianWords(26.67, {
+                                integerOnly:false, 
+                                useCurrency: true,
+                                majorCurrencySymbol: 'ringit',
+                                minorCurrencySymbol: 'sen',
+                                majorCurrencyAtEnd: true,
+                                minorCurrencyAtEnd: false,
+                                useOnlyWord: true,
+                                useCase: 'proper' });
+// x: Twenty Six Ringit And Sen Sixty Seven Only
+
+// You can see all options and their default values
+var x = numberstowords.options;
+/* x: { useComma: false,
+  useAnd: false,
+  useOnlyWord: false,
+  integerOnly: true,
+  useCurrency: false,
+  majorCurrencySymbol: 'rupees',
+  minorCurrencySymbol: 'paise',
+  majorCurrencyAtEnd: false,
+  minorCurrencyAtEnd: true,
+  suppressMajorIfZero: false,
+  suppressMinorIfZero: false,
+  useCase: 'lower' }
+*/
+
+// You can even change the default values.
+numberstowords.options.useCurrency = true;
+// Now all calls will return currency format by default
+var x = numberstowords.toInternationalWords(24);
+// x: rupees twenty four
+
+// default values can be reset
+ numberstowords.resetOptions();
+ var x = numberstowords.toInternationalWords(24);
+ // x: twenty four
+
 ```
 
-Note: As of version 0.1.0, numberstowords only works with integer numbers. Decimals are silently truncated.
+Better documentation is in the pipeline :).
