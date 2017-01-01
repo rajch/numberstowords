@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "tap -b test/basic*.js",
+    "test-detailed": "tap -b -Rspec test/basic*.js",
     "coverage": "tap -b -Rspec --cov --coverage-report=lcov test/basic*.js"
   },
   "repository": {

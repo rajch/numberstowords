@@ -4,8 +4,8 @@
 
   function assertNumber(number, word)
   {
-    tap.assert(n.toWords(number) === word,
-               number + ' should equal "' + word + '", actually equals "' + n.toWords(number) + '"');
+    var testvalue = n.toWords(number, { useAnd : true, useComma : true });
+    tap.assert(testvalue === word, number + ' should equal "' + word + '", actually equals "' + testvalue + '"');
   }
 
   tap.comment("Testing zero");
@@ -46,32 +46,32 @@
 
   tap.comment('Smoke testing hundreds');
   assertNumber(100, 'one hundred');
-  assertNumber(101, 'one hundred one');
-  assertNumber(119, 'one hundred nineteen');
-  assertNumber(101, 'one hundred one');
-  assertNumber(120, 'one hundred twenty');
-  assertNumber(129, 'one hundred twenty nine');
-  assertNumber(130, 'one hundred thirty');
-  assertNumber(199, 'one hundred ninety nine');
+  assertNumber(101, 'one hundred and one');
+  assertNumber(119, 'one hundred and nineteen');
+  assertNumber(101, 'one hundred and one');
+  assertNumber(120, 'one hundred and twenty');
+  assertNumber(129, 'one hundred and twenty nine');
+  assertNumber(130, 'one hundred and thirty');
+  assertNumber(199, 'one hundred and ninety nine');
   assertNumber(200, 'two hundred');
-  assertNumber(999, 'nine hundred ninety nine');
+  assertNumber(999, 'nine hundred and ninety nine');
 
   tap.comment('Smoke testing thousands');
   assertNumber(1000, 'one thousand');
-  assertNumber(1001, 'one thousand one');
-  assertNumber(1019, 'one thousand nineteen');
-  assertNumber(1020, 'one thousand twenty');
-  assertNumber(1021, 'one thousand twenty one');
-  assertNumber(1099, 'one thousand ninety nine');
+  assertNumber(1001, 'one thousand and one');
+  assertNumber(1019, 'one thousand and nineteen');
+  assertNumber(1020, 'one thousand and twenty');
+  assertNumber(1021, 'one thousand and twenty one');
+  assertNumber(1099, 'one thousand and ninety nine');
   assertNumber(1100, 'one thousand one hundred');
-  assertNumber(1101, 'one thousand one hundred one');
-  assertNumber(1199, 'one thousand one hundred ninety nine');
+  assertNumber(1101, 'one thousand, one hundred and one');
+  assertNumber(1199, 'one thousand, one hundred and ninety nine');
   assertNumber(1200, 'one thousand two hundred');
-  assertNumber(1999, 'one thousand nine hundred ninety nine');
+  assertNumber(1999, 'one thousand, nine hundred and ninety nine');
   assertNumber(2000, 'two thousand');
   assertNumber(10000, 'ten thousand');
   assertNumber(19000, 'nineteen thousand');
-  assertNumber(19999, 'nineteen thousand nine hundred ninety nine');
+  assertNumber(19999, 'nineteen thousand, nine hundred and ninety nine');
   assertNumber(20000, 'twenty thousand');
-  assertNumber(99999, 'ninety nine thousand nine hundred ninety nine');
+  assertNumber(99999, 'ninety nine thousand, nine hundred and ninety nine');
 })();

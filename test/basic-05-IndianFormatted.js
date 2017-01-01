@@ -4,9 +4,8 @@
 
   function assertNumber(number, word)
   {
-    var testvalue = n.toIndianWords(number, {useAnd: true, useComma: true});
-    tap.assert(testvalue === word,
-               number + ' should equal "' + word + '", actually equals "' + testvalue + '"');
+    var testvalue = n.toIndianWords(number, { useAnd : true, useComma : true });
+    tap.assert(testvalue === word, number + ' should equal "' + word + '", actually equals "' + testvalue + '"');
   }
 
   tap.comment('Smoke testing lakhs');
