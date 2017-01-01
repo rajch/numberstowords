@@ -1,6 +1,6 @@
 {
   "name": "@rajch/numberstowords",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A javascript library to convert numbers to words. Supports both international and Indian convention.",
   "main": "index.js",
   "scripts": {
