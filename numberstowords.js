@@ -213,23 +213,39 @@
       return result.trim();
     }
 
-    this.toWords = function(number, opts) {
-      opts = combineOpts(this.options, opts);
-
-      var value = opts.integerOnly ? Math.trunc(number) : number;
+    function convertToWords(number, opts, words)
+    {
+      var value = number;
       var result = '';
 
       if(value === 0) {
-        result = this.words.unitWords[0];
+        result = words.unitWords[0];
       } else {
         if(opts.useIndianStyle) {
-          result = toIndianThousands(value, opts, this.words, false);
+          result = toIndianThousands(value, opts, words, false);
         } else {
-          result = toInternationalThousands(value, opts, this.words, false);
+          result = toInternationalThousands(value, opts, words, false);
         }
       }
 
       return result.trim();
+    }
+
+    this.toWords = function(number, opts) {
+      opts = combineOpts(this.options, opts);
+      var result = 0;
+      if(opts.integerOnly) {
+        result = convertToWords(Math.trunc(number), opts, this.words);
+      } else {
+        var intergerPart = Math.trunc(number);
+        var decimalPart = number - intergerPart;
+
+        decimalPart = Math.round(decimalPart * 100);
+
+        result = convertToWords(intergerPart, opts, this.words) + ' ' + this.words.andWord + ' ' +
+                 convertToWords(decimalPart, opts, this.words);
+      }
+      return result;
     };
 
     this.toIndianWords = function toIndianWords(number, opts) {
@@ -244,6 +260,6 @@
       return this.toWords(number, opts);
     };
   }
-
   return new numberstowords();
+
 });
