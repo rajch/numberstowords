@@ -16,42 +16,51 @@
 
   function numberstowords()
   {
-    this.words = {
-      unitWords : [
-                    'zero',
-                    'one',
-                    'two',
-                    'three',
-                    'four',
-                    'five',
-                    'six',
-                    'seven',
-                    'eight',
-                    'nine',
-                    'ten',
-                    'eleven',
-                    'twelve',
-                    'thirteen',
-                    'fourteen',
-                    'fifteen',
-                    'sixteen',
-                    'seventeen',
-                    'eighteen',
-                    'nineteen'
-                  ],
-      tenWords : [ null, null, 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety' ],
-      smallAmountWords : { "hundred" : 'hundred', "thousand" : 'thousand' },
-      bigAmountWords : {
-                         "lakh" : 'lakh',
-                         "crore" : 'crore',
-                         "million" : 'million',
-                         "billion" : 'billion',
-                         "trillion" : 'trillion'
-                       },
-      andWord : 'and'
-    };
+    function defaultWords()
+    {
+      return {
+        unitWords : [
+                      'zero',
+                      'one',
+                      'two',
+                      'three',
+                      'four',
+                      'five',
+                      'six',
+                      'seven',
+                      'eight',
+                      'nine',
+                      'ten',
+                      'eleven',
+                      'twelve',
+                      'thirteen',
+                      'fourteen',
+                      'fifteen',
+                      'sixteen',
+                      'seventeen',
+                      'eighteen',
+                      'nineteen'
+                    ],
+        tenWords : [ null, null, 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety' ],
+        smallAmountWords : { "hundred" : 'hundred', "thousand" : 'thousand' },
+        bigAmountWords : {
+                           "lakh" : 'lakh',
+                           "crore" : 'crore',
+                           "million" : 'million',
+                           "billion" : 'billion',
+                           "trillion" : 'trillion'
+                         },
+        andWord : 'and'
+      };
+    }
 
-    this.options = { useComma : false, useAnd : false, integerOnly : true };
+    function defaultOpts()
+    {
+      return { useComma : false, useAnd : false, integerOnly : true };
+    }
+
+    this.words = defaultWords();
+    this.options = defaultOpts();
 
     function combineOpts(opts1, opts2)
     {
@@ -259,6 +268,11 @@
       opts.useIndianStyle = false;
       return this.toWords(number, opts);
     };
+
+    this.resetOptions = function resetOptions() {
+      this.words = defaultWords();
+      this.options = defaultOpts();
+    }
   }
   return new numberstowords();
 
