@@ -40,11 +40,7 @@
                     'nineteen'
                   ],
       tenWords : [ null, null, 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety' ],
-      smallAmountWords : {
-                           "hundred" : 'hundred',
-                           "thousand" : 'thousand',
-
-                         },
+      smallAmountWords : { "hundred" : 'hundred', "thousand" : 'thousand' },
       bigAmountWords : {
                          "lakh" : 'lakh',
                          "crore" : 'crore',
@@ -52,6 +48,7 @@
                          "billion" : 'billion',
                          "trillion" : 'trillion'
                        },
+      andWord : 'and'
     };
 
     this.options = { useComma : false, useAnd : false, integerOnly : true };
@@ -103,7 +100,7 @@
 
       if(value > 19) {
         if(opts.useAnd && needsAnd) {
-          result += 'and ';
+          result += (words.andWord + ' ');
           needsAnd = false;
         }
         var tenFactor = Math.trunc(value / 10);
@@ -113,7 +110,7 @@
 
       if(value > 0) {
         if(opts.useAnd && needsAnd) {
-          result += 'and ';
+          result += (words.andWord + ' ');
           needsAnd = false;
         }
         result += words.unitWords[value] + ' ';
@@ -223,7 +220,7 @@
       var result = '';
 
       if(value === 0) {
-        result = 'zero ';
+        result = this.words.unitWords[0];
       } else {
         if(opts.useIndianStyle) {
           result = toIndianThousands(value, opts, this.words, false);
