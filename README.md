@@ -101,4 +101,4 @@ var x = numberstowords.toInternationalWords(24);
 
 ```
 
-Better documentation is in the pipeline :).
+Read the documentation [here](https://rajch.github.io/numberstowords/reference/).

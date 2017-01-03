@@ -141,12 +141,13 @@
       if((!opts2) || opts2 === opts1) {
         result = opts1;
       } else {
-        for(var prop in opts1) {
+        var prop;
+        for(prop in opts1) {
           if(!opts2[prop]) {
             result[prop] = opts1[prop];
           }
         }
-        for(var prop in opts2) {
+        for(prop in opts2) {
           result[prop] = opts2[prop];
         }
       }
@@ -170,7 +171,7 @@
 
     function useComma(value, opts, needsComma)
     {
-      return opts.useComma && needsComma ? value.trim() + ", " : value;
+      return opts.useComma && needsComma ? value.trim() + ', ' : value;
     }
 
     function toHundreds(number, opts, words, needsAnd)
@@ -455,7 +456,7 @@
     this.resetOptions = function resetOptions() {
       this.words = defaultWords();
       this.options = defaultOpts();
-    }
+    };
   }
   return new numberstowords();
 
