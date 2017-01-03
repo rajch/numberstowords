@@ -2,11 +2,12 @@
   "name": "@rajch/numberstowords",
   "version": "0.2.0",
   "description": "A javascript library to convert numbers to words. Supports both international and Indian convention.",
-  "main": "index.js",
+  "main": "numberstowords.js",
   "scripts": {
     "test": "tap -b test/basic*.js",
     "test-detailed": "tap -b -Rspec test/basic*.js",
-    "coverage": "tap -b -Rspec --cov --coverage-report=lcov test/basic*.js"
+    "coverage": "tap -b -Rspec --cov --coverage-report=lcov test/basic*.js",
+    "builddocs": "jsdoc -d docs/reference numberstowords.js -R README.md"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/rajch/numberstowords#readme",
   "devDependencies": {
+    "jsdoc": "^3.4.3",
     "tap": "^8.0.1"
   }
 }
