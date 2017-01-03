@@ -343,13 +343,15 @@
         result += ' ' + getWord('only', this.words);
       }
 
-      if(opts.useCase !== 'lower') {
+      if(opts.useCase.toLowerCase() !== 'lower') {
         if(opts.useCase.toLowerCase() === 'upper') {
           result = result.toUpperCase();
         } else if(opts.useCase.toLowerCase() === 'proper') {
           result = result.split(' ').map(function properCase(element) {
             return element.charAt(0).toUpperCase() + element.substring(1);
           }).join(' ');
+        } else if(opts.useCase.toLocaleLowerCase() === 'sentence') {
+          result = result.charAt(0).toUpperCase() + result.substring(1);
         }
       }
 

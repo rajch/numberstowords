@@ -42,6 +42,10 @@
                    { useAnd : true, integerOnly : false, useCase : 'proper' });
 
   assertWithCasing(0, "Zero Only", { useCase : 'proper' });
-  assertWithCasing(0, "Zero", { useCase : 'proper', useOnlyWord:false });
+  assertWithCasing(0, "Zero", { useCase : 'proper', useOnlyWord : false });
+
+  assertWithCasing(12.25,
+                   "Rupees twelve and twenty five paise only",
+                   { useAnd : true, integerOnly : false, useCurrency : true, useCase : 'sentence' });
 
 })();
