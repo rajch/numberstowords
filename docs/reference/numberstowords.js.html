@@ -1,9 +1,37 @@
-(
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: numberstowords.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: numberstowords.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(
     function(root, factory) {
-      if(typeof define === 'function' && define.amd) {
+      if(typeof define === 'function' &amp;&amp; define.amd) {
         // AMD. Register as an anonymous module.
         define([], factory);
-      } else if(typeof module === 'object' && module.exports) {
+      } else if(typeof module === 'object' &amp;&amp; module.exports) {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like environments that support module.exports,
         // like Node.
@@ -29,13 +57,13 @@
     /**
      * The Words object defines the words that are used in conversion.
      * @typedef numberstowords.Words
-     * @property {Array.<string>} unitWords - describes the "unit" words, zero to nineteen. Array indices match the
+     * @property {Array.&lt;string>} unitWords - describes the "unit" words, zero to nineteen. Array indices match the
      * word. E.g.: unitWords[0] is 'zero'
-     * @property {Array.<string>} tenWords - describes the "tens" words, twenty to ninety. Array indices match the
+     * @property {Array.&lt;string>} tenWords - describes the "tens" words, twenty to ninety. Array indices match the
      * factor of ten. E.g.: unitWords[3] is 'thirty'. The first two indices should be null.
-     * @property {Object.<string, string>} smallAmountWords - words for "small" large amounts. The keys are "hundred"
+     * @property {Object.&lt;string, string>} smallAmountWords - words for "small" large amounts. The keys are "hundred"
      * and "thousand".
-     * @property {Object.<string, string>} bigAmountWords - words for "big" large amounts. The keys are "lakh", "crore",
+     * @property {Object.&lt;string, string>} bigAmountWords - words for "big" large amounts. The keys are "lakh", "crore",
      * "million", "billion" and "trillion".
      * @property {string} andWord - word used for joining hundreds with units, and joining the integer part with decimal
      * part. Default is 'and'.
@@ -170,7 +198,7 @@
 
     function useComma(value, opts, needsComma)
     {
-      return opts.useComma && needsComma ? value.trim() + ", " : value;
+      return opts.useComma &amp;&amp; needsComma ? value.trim() + ", " : value;
     }
 
     function toHundreds(number, opts, words, needsAnd)
@@ -186,7 +214,7 @@
       }
 
       if(value > 19) {
-        if(opts.useAnd && needsAnd) {
+        if(opts.useAnd &amp;&amp; needsAnd) {
           result += (words.andWord + ' ');
           needsAnd = false;
         }
@@ -196,7 +224,7 @@
       }
 
       if(value > 0) {
-        if(opts.useAnd && needsAnd) {
+        if(opts.useAnd &amp;&amp; needsAnd) {
           result += (words.andWord + ' ');
           needsAnd = false;
         }
@@ -239,7 +267,7 @@
       }
 
       if(value !== 0) {
-        if(opts.useComma && needsComma && value > 99 && value % 100 !== 0) {
+        if(opts.useComma &amp;&amp; needsComma &amp;&amp; value > 99 &amp;&amp; value % 100 !== 0) {
           result = result.trim() + ', ';
         }
         result += toHundreds(value, opts, words, needsAnd);
@@ -291,7 +319,7 @@
       }
 
       if(value !== 0) {
-        if(opts.useComma && needsComma && value > 99 && value % 100 !== 0) {
+        if(opts.useComma &amp;&amp; needsComma &amp;&amp; value > 99 &amp;&amp; value % 100 !== 0) {
           result = result.trim() + ', ';
         }
         result += toHundreds(value, opts, words, needsAnd);
@@ -323,7 +351,7 @@
       var result = '';
 
       var integerValue = Math.trunc(number);
-      if(!(integerValue === 0 && opts.suppressMajorIfZero)) {
+      if(!(integerValue === 0 &amp;&amp; opts.suppressMajorIfZero)) {
         var integerPart = convertToWords(integerValue, opts, words);
 
         if(!opts.majorCurrencyAtEnd) {
@@ -337,7 +365,7 @@
         var decimalValue = number - integerValue;
         decimalValue = Math.round(decimalValue * 100);
 
-        if(!(decimalValue === 0 && opts.suppressMinorIfZero)) {
+        if(!(decimalValue === 0 &amp;&amp; opts.suppressMinorIfZero)) {
           var decimalPart = convertToWords(decimalValue, opts, words);
 
           if(result !== '') {
@@ -360,7 +388,7 @@
       var result = '';
 
       var integerPart = Math.trunc(number);
-      if(!(integerPart === 0 && opts.suppressMajorIfZero)) {
+      if(!(integerPart === 0 &amp;&amp; opts.suppressMajorIfZero)) {
         result = convertToWords(integerPart, opts, words);
       }
 
@@ -368,7 +396,7 @@
         var decimalPart = number - integerPart;
         decimalPart = (Math.round(decimalPart * 100) / 100);
 
-        if(!(decimalPart === 0 && opts.suppressMinorIfZero)) {
+        if(!(decimalPart === 0 &amp;&amp; opts.suppressMinorIfZero)) {
           if(result !== '') {
             result += ' ';
           }
@@ -406,7 +434,7 @@
         result = processNumber(number, opts, this.words);
       }
 
-      if(opts.useOnlyWord && result !== '') {
+      if(opts.useOnlyWord &amp;&amp; result !== '') {
         result += ' ' + getWord('only', this.words);
       }
 
@@ -459,4 +487,26 @@
   }
   return new numberstowords();
 
-});
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="numberstowords.html">numberstowords</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jan 03 2017 20:04:27 GMT+0530 (IST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
