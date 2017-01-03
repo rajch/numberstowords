@@ -1,7 +1,6 @@
 ---
 layout: default
-site.github.zip_url: https://github.com/rajch/numberstowords/archive/master.zip
 ---
-This site is {{ site.github.repository_url }}
-You can download from {{ site.github.zip_url }} or {{ site.github.tar_url }}
-Maybe. If {{ site.github.show_downloads }} is true. Is it?
+This project was originally created as an Excel VBA macro, based on a painfully detailed specification drawn up by [Dr. Nitin Paranjape](https://efficiency365.com). The original version can be []downloaded](https://efficiency365.com/2017/01/02/amount-to-words-macro/) from his blog.
+
+Read the [reference](reference).
