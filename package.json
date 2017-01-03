@@ -1,13 +1,13 @@
 {
   "name": "@rajch/numberstowords",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A javascript library to convert numbers to words. Supports both international and Indian convention.",
   "main": "numberstowords.js",
   "scripts": {
     "test": "tap -b test/basic*.js",
     "test-detailed": "tap -b -Rspec test/basic*.js",
     "coverage": "tap -b -Rspec --cov --coverage-report=lcov test/basic*.js",
-    "minify" : "uglifyjs numberstowords.js -c -m > numberstowords.min.js",
+    "minify": "uglifyjs numberstowords.js -c -m > numberstowords.min.js",
     "builddocs": "jsdoc -d docs/reference numberstowords.js -R README.md"
   },
   "repository": {
