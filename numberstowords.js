@@ -14,6 +14,11 @@
       }
     })(this, function() {
 
+  // Polyfill for Math.trunc, needed to support IE
+  if(!Math.trunc) {
+    Math.trunc = function(val) { return val < 0 ? Math.ceil(val) : Math.floor(val); }
+  }
+
   /**
    * The numberstowords singleton class.
    * @constructor
